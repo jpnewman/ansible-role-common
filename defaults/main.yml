@@ -1,0 +1,25 @@
+apt_packages:
+  - software-properties-common
+  - python-software-properties
+  - ntp
+  - unzip
+  - htop
+  - vim
+  - sysstat
+  - nmon
+  - nload
+  - whois
+  - sshpass
+  - expect
+  - traceroute
+  - curl
+
+limits:
+  - domain: '*'
+    type: 'soft'
+    item: 'nofile'
+    value: 'unlimited'
+  - domain: '*'
+    type: 'hard'
+    item: 'nofile'
+    value: 'unlimited'

@@ -1,0 +1,24 @@
+---
+# tasks file for jpnewman.common
+- name: Update apt cache
+  apt: update_cache=yes
+       cache_valid_time=600
+
+- name: Install
+  apt: name={{ item }}
+       state=installed
+  with_items:
+    apt_packages
+
+- name: Update alternative editor
+  command: >
+    update-alternatives --set editor /usr/bin/vim.tiny
+
+- name: Configure skel bash aliases
+  lineinfile: dest=/etc/skel/.bash_aliases line="{{ item }}" state=present create=yes
+  with_items:
+    - 'alias ll="ls -l"'
+    - 'alias la="ls -lha"'
+
+- name: Update limits
+  template: src=limits.conf.j2 dest=/etc/security/limits.conf owner=root group=root mode=0644
