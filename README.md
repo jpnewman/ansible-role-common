@@ -1,5 +1,7 @@
 # jpnewman.common
 
+[![Build Status](https://travis-ci.org/jpnewman/ansible-role-common.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-common)
+
 This is a general Ansible role, currently only developed for **Ubuntu**, that: -
 
 - Updates apt cache
