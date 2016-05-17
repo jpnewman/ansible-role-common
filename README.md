@@ -1,5 +1,6 @@
 # jpnewman.common
 
+[![Ansible Role](https://img.shields.io/ansible/role/9586.svg?maxAge=2592000)](https://galaxy.ansible.com/jpnewman/common/)
 [![Build Status](https://travis-ci.org/jpnewman/ansible-role-common.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-common)
 
 This is a general Ansible role, currently only developed for **Ubuntu**, that: -
