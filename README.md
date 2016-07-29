@@ -48,7 +48,7 @@ Ansible 2.x
 |item|Contains limits item.|nofile|
 |value|Contains limits value.|unlimited|
 
-**NOTE:** See [http://linux.die.net/man/5/limits.conf]() for more ```limits.conf``` information
+**NOTE:** See <http://linux.die.net/man/5/limits.conf> for more ```limits.conf``` information
 
 ```
 apt_packages:
