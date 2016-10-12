@@ -22,3 +22,17 @@
 
 - name: Update limits
   template: src=limits.conf.j2 dest=/etc/security/limits.conf owner=root group=root mode=0644
+  when: limits > 0
+
+- name: Configure pam_limits.so
+  lineinfile:
+    dest={{ item }}
+    regexp='^\s*#?\s*session\s+required\s+pam_limits.so'
+    insertafter=EOF
+    line='session    required    pam_limits.so'
+  when: limits > 0
+  with_items:
+    - /etc/pam.d/su
+    - /etc/pam.d/common-session
+    - /etc/pam.d/common-session-noninteractive
+    - /etc/pam.d/sudo
