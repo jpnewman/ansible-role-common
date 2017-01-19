@@ -8,7 +8,7 @@
   apt: name={{ item }}
        state=installed
   with_items:
-    apt_packages
+    '{{ apt_packages }}'
 
 - name: Update alternative editor
   command: >
@@ -22,7 +22,7 @@
 
 - name: Update limits
   template: src=limits.conf.j2 dest=/etc/security/limits.conf owner=root group=root mode=0644
-  when: limits > 0
+  when: limits | length > 0
 
 - name: Configure pam_limits.so
   lineinfile:
@@ -30,7 +30,7 @@
     regexp='^\s*#?\s*session\s+required\s+pam_limits.so'
     insertafter=EOF
     line='session    required    pam_limits.so'
-  when: limits > 0
+  when: limits | length > 0
   with_items:
     - /etc/pam.d/su
     - /etc/pam.d/common-session

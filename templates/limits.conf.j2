@@ -55,6 +55,6 @@
 
 {% for limit in limits -%}
 {{ limit.domain.ljust(16) }} {{ limit.type.ljust(7) }} {{ limit.item.ljust(15) }} {{ limit.value }}
-{% endfor %}
+{% endfor -%}
 
 # End of file
