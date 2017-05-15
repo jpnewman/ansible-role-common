@@ -15,21 +15,30 @@
     update-alternatives --set editor /usr/bin/vim.tiny
 
 - name: Configure skel bash aliases
-  lineinfile: dest=/etc/skel/.bash_aliases line="{{ item }}" state=present create=yes
+  lineinfile:
+    dest: /etc/skel/.bash_aliases
+    line: "{{ item }}"
+    state: present
+    create: yes
   with_items:
     - 'alias ll="ls -l"'
     - 'alias la="ls -lha"'
 
 - name: Update limits
-  template: src=limits.conf.j2 dest=/etc/security/limits.conf owner=root group=root mode=0644
+  template:
+    src: limits.conf.j2
+    dest: /etc/security/limits.conf
+    owner: root
+    group: root
+    mode: 0644
   when: limits | length > 0
 
 - name: Configure pam_limits.so
   lineinfile:
-    dest={{ item }}
-    regexp='^\s*#?\s*session\s+required\s+pam_limits.so'
-    insertafter=EOF
-    line='session    required    pam_limits.so'
+    dest: "{{ item }}"
+    regexp: '^\s*#?\s*session\s+required\s+pam_limits.so'
+    insertafter: EOF
+    line: 'session    required    pam_limits.so'
   when: limits | length > 0
   with_items:
     - /etc/pam.d/su
