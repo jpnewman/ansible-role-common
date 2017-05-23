@@ -1,3 +1,5 @@
+alternative_editor: /usr/bin/vim.tiny
+
 apt_packages:
   - software-properties-common
   - python-software-properties

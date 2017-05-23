@@ -1,18 +1,28 @@
 ---
 # tasks file for jpnewman.common
 - name: Update apt cache
-  apt: update_cache=yes
-       cache_valid_time=600
+  apt:
+    update_cache: yes
+    cache_valid_time: 600
 
 - name: Install
-  apt: name={{ item }}
-       state=installed
+  apt:
+    name: "{{ item }}"
+    state: installed
   with_items:
     '{{ apt_packages }}'
 
+- name: Check alternative editor
+  command: >
+    ls -lha /etc/alternatives/editor
+  register: alt_editor
+  check_mode: no
+  changed_when: False
+
 - name: Update alternative editor
   command: >
-    update-alternatives --set editor /usr/bin/vim.tiny
+    update-alternatives --set editor {{ alternative_editor }}
+  when: alternative_editor not in alt_editor.stdout
 
 - name: Configure skel bash aliases
   lineinfile:
