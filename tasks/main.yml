@@ -4,6 +4,7 @@
   apt:
     update_cache: yes
     cache_valid_time: 600
+  changed_when: False
 
 - name: Install
   apt:
@@ -35,13 +36,12 @@
     - 'alias la="ls -lha"'
 
 - name: Update limits
-  template:
-    src: limits.conf.j2
-    dest: /etc/security/limits.conf
-    owner: root
-    group: root
-    mode: 0644
-  when: limits | length > 0
+  lineinfile:
+    dest: "{{ limits_conf_file }}"
+    regexp: "^{{ item.domain | regex_escape() }}\\s+{{ item.type | regex_escape() }}\\s+{{ item.item | regex_escape() }}\\s+{{ item.value | regex_escape() }}$"
+    line: "{{ item.domain.ljust(16) }} {{ item.type.ljust(7) }} {{ item.item.ljust(15) }} {{ item.value | trim}}"
+    insertbefore: "^# End of file"
+  with_items: "{{ limits }}"
 
 - name: Configure pam_limits.so
   lineinfile:

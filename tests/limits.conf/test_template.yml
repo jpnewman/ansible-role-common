@@ -1,0 +1,39 @@
+---
+- hosts: all
+  gather_facts: no
+  become: no
+
+  vars_files:
+    - ./defaults/main.yml
+
+  tasks:
+    - name: Make tmp folder
+      local_action: command mkdir -p ./tmp/
+    - name: Copy file to tmp
+      local_action: command cp {{ item }} ./tmp/{{ item | basename() }}
+      with_fileglob:
+        - "./files/*"
+
+    - name: Update empty limits
+      lineinfile:
+        dest: "./tmp/limits_empty.conf"
+        regexp: "^{{ item.domain | regex_escape() }}\\s+{{ item.type | regex_escape() }}\\s+{{ item.item | regex_escape() }}\\s+{{ item.value | regex_escape() }}$"
+        line: "{{ item.domain.ljust(16) }} {{ item.type.ljust(7) }} {{ item.item.ljust(15) }} {{ item.value | trim}}"
+        insertbefore: "^# End of file"
+      with_items: "{{ limits }}"
+
+    - name: Update partial limits
+      lineinfile:
+        dest: "./tmp/limits_partial.conf"
+        regexp: "^{{ item.domain | regex_escape() }}\\s+{{ item.type | regex_escape() }}\\s+{{ item.item | regex_escape() }}\\s+{{ item.value | regex_escape() }}$"
+        line: "{{ item.domain.ljust(16) }} {{ item.type.ljust(7) }} {{ item.item.ljust(15) }} {{ item.value | trim}}"
+        insertbefore: "^# End of file"
+      with_items: "{{ limits }}"
+
+    - name: Update eof only limits
+      lineinfile:
+        dest: "./tmp/limits_eof_only.conf"
+        regexp: "^{{ item.domain | regex_escape() }}\\s+{{ item.type | regex_escape() }}\\s+{{ item.item | regex_escape() }}\\s+{{ item.value | regex_escape() }}$"
+        line: "{{ item.domain.ljust(16) }} {{ item.type.ljust(7) }} {{ item.item.ljust(15) }} {{ item.value | trim}}"
+        insertbefore: "^# End of file"
+      with_items: "{{ limits }}"

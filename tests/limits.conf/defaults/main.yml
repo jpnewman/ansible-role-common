@@ -1,6 +1,6 @@
 alternative_editor: /usr/bin/vim.tiny
 
-limits_conf_file: /etc/security/limits.conf
+limits_conf_file: ./tmp/limits.conf
 
 apt_packages:
   - software-properties-common
