@@ -3,14 +3,14 @@
 [![Ansible Role](https://img.shields.io/ansible/role/9586.svg?maxAge=2592000)](https://galaxy.ansible.com/jpnewman/common/)
 [![Build Status](https://travis-ci.org/jpnewman/ansible-role-common.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-common)
 
-This is a general Ansible role, currently only developed for **Ubuntu**, that: -
+This is a general Ansible role that: -
 
 - Updates apt cache
 
-- Installs the following atp packages: -
+- Installs the following atp packages. Can be overwritten via list variable ```apt_packages```: -
 
     - software-properties-common
-    - python-software-properties
+    - python-software-properties / python3-software-properties (Stretch)
     - ntp
     - unzip
     - htop
@@ -24,7 +24,7 @@ This is a general Ansible role, currently only developed for **Ubuntu**, that: -
     - traceroute
     - curl
 
-- Update alternative editor to vim
+- Updates alternative editor to vim
 
 - Configures 'skel' bash aliases
 
@@ -38,7 +38,7 @@ Ansible 2.x
 
 |Variable|Description|
 |---|---|
-|apt_packages|Contains a list for apt packages to install|
+|apt_packages|Overrides the list of the default apt packages to install|
 |limits|Contains a list of 'limit' classes|
 
 |'limit' class variables|Description|Default|
@@ -48,7 +48,12 @@ Ansible 2.x
 |item|Contains limits item.|nofile|
 |value|Contains limits value.|unlimited|
 
-**NOTE:** See <http://linux.die.net/man/5/limits.conf> for more ```limits.conf``` information
+**NOTES: -**
+- Default apt packages are included via ```vars``` YAML files ```ansible_os_family``` and then ```ansible_lsb.codename```.  
+  *e.g.* If ```apt_packages``` is not defined and the platform codename is ```Stretch```, variables for platform file ```vars/ubuntu.yml``` will be loaded and then overwritten with variables in ```vars/stretch.yml```.
+- See <http://linux.die.net/man/5/limits.conf> for more ```limits.conf``` information
+
+*e.g.*
 
 ```
 apt_packages:

@@ -1,12 +1,26 @@
 ---
 # tasks file for jpnewman.common
+
+- name: Load OS Family variables
+  include_vars: "{{ ansible_os_family | lower }}.yml"
+
+- name: Load OS Codename variables, if exists
+  include_vars: "{{ ansible_lsb.codename | lower }}.yml"
+  ignore_errors: True
+  changed_when: False
+
 - name: Update apt cache
   apt:
     update_cache: yes
     cache_valid_time: 600
   changed_when: False
 
-- name: Install
+- name: Set fact apt_packages.
+  set_fact:
+    apt_packages: "{{ __apt_packages | list }}"
+  when: apt_packages is not defined
+
+- name: Install packages
   apt:
     name: "{{ item }}"
     state: installed

@@ -2,21 +2,8 @@ alternative_editor: /usr/bin/vim.tiny
 
 limits_conf_file: /etc/security/limits.conf
 
-apt_packages:
-  - software-properties-common
-  - python-software-properties
-  - ntp
-  - unzip
-  - htop
-  - vim
-  - sysstat
-  - nmon
-  - nload
-  - whois
-  - sshpass
-  - expect
-  - traceroute
-  - curl
+# Set apt_packages to overwrite default packages.
+# apt_packages: []
 
 limits:
   - domain: '*'
