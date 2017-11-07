@@ -50,8 +50,8 @@ Ansible 2.x
 
 **NOTES: -**
 - Default apt packages are included via ```vars``` YAML files ```ansible_os_family``` and then ```ansible_lsb.codename```.  
-  *e.g.* If ```apt_packages``` is not defined and the platform codename is ```Stretch```, variables for platform file ```vars/ubuntu.yml``` will be loaded and then overwritten with variables in ```vars/stretch.yml```.
-- See <http://linux.die.net/man/5/limits.conf> for more ```limits.conf``` information
+  *e.g.* If ```apt_packages``` is not defined and the platform codename is ```Stretch```, variables from platform file ```vars/ubuntu.yml``` will be loaded and then overwritten with variables in ```vars/stretch.yml```, if it exists.
+- See <http://linux.die.net/man/5/limits.conf> for more ```limits.conf``` information.
 
 *e.g.*
 
