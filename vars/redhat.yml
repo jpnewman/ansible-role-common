@@ -3,6 +3,7 @@
 __apt_packages:
   - software-properties-common
   - python-software-properties
+  - bash-completion
   - ntp
   - unzip
   - htop
